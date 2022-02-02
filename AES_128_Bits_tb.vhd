@@ -33,7 +33,7 @@ AES_128_Bits_comp : entity work.AES_128_Bits port map(
 clk <= not clk after period/2;
 
 
-DIN <= round00 after 60 ns;
+DIN <= round00 after 100 ns;
 KIN <= round04 after 100 ns, round14 after 110 ns, round24 after 120 ns,round34 after 130 ns, round44 after 140 ns, round54 after 150 ns, round64 after 160 ns, round74 after 170 ns, round84 after 180 ns, round94 after 190 ns, round104 after 200 ns;
 reset <= '0' after 50 ns;
 start <= '1' after 90 ns, '0' after 100 ns;

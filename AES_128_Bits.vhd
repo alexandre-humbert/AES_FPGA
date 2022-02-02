@@ -25,11 +25,11 @@ signal OUT_ShiftRow : std_logic_vector(127 downto 0);
 signal IN_MixColumns : std_logic_vector(127 downto 0);
 signal OUT_MixColumns : std_logic_vector(127 downto 0);
 
-signal OUTPUT : std_logic_vector(127 downto 0);
+
 signal Key : std_logic_vector(127 downto 0);
 
 signal SelMux1 : std_logic_vector(1 downto 0);
-signal SelDemux1 : std_logic;
+signal OUT_en : std_logic;
 
 begin
 
@@ -68,17 +68,16 @@ Mux3to1 : entity  work.mux_3to1(arch) port map
 	(SEL => SelMux1, A=> DIN, B=> OUT_ShiftRow, C=> OUT_MixColumns, X=> IN_AddRoundKey);
 
 
-Demux1 : entity work.demux_1to2(arch) port map
-	(SEL => SelDemux1, I=> OUT_AddRoundKey, A=> IN_SubBytes, B=> OUTPUT);
+IN_SubBytes <= OUT_AddRoundKey;
 
 
 IN_MixColumns <= OUT_ShiftRow;
 
 SM : entity work.AES_State_Machine(arch) port map
-	(clk => clk, reset => rst, start => start, mux1 => SelMux1, demux1 => SelDemux1, busy => busy, key_en => open);
+	(clk => clk, reset => rst, start => start, mux1 => SelMux1, OUT_en => OUT_en, busy => busy, key_en => open);
 
-FF_DOUT : entity work.FF(arch) port map
-	(clk => clk, reset => rst, D => OUTPUT, Q => DOUT);
+FF_DOUT : entity work.FF2(arch) port map
+	(clk => clk, enable => OUT_en, reset => rst, D => OUT_AddRoundKey, Q => DOUT);
 
 FF_KEY : entity work.FF(arch) port map
 	(clk => clk, reset => rst, D => KIN, Q => Key);

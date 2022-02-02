@@ -9,9 +9,8 @@ port (  clk : in std_logic;
         start : in std_logic;
         
         mux1 : out std_logic_vector(1 downto 0);
-        demux1 : out std_logic; 
-	      demux2 : out std_logic;
-	      key_en : out std_logic;
+        OUT_en : out std_logic; 
+	key_en : out std_logic;
         busy : out std_logic
 );
   
@@ -33,7 +32,9 @@ if reset = '1' then
 	State <= READY;
 	Round <= "0000";
 	busy <= '0';
-        key_en <= '0';
+	Round <= "0000";
+	OUT_en <= '0';
+	key_en <= '0';
 elsif start ='1' then
 	State <= FROUND;
 else
@@ -41,7 +42,7 @@ else
 		when RUNNING =>
 			busy <= '1';
 			mux1 <= "10";
-			demux1 <= '0';
+			OUT_en <= '0';
 			Round <= std_logic_vector( unsigned(Round) + 1);
 			if Round = "1000" then
 				State <= LROUND;
@@ -49,19 +50,19 @@ else
 		when FROUND =>
 			busy <= '1';
 			mux1 <= "00";
-			demux1 <= '0';
+			OUT_en <= '0';
 			State <= RUNNING;
 			key_en <= '1';
 
 		when LROUND =>
 			busy <= '1';
 			mux1 <= "01";
-			demux1 <= '1';
+			OUT_en <= '1';
 			State <= READY;
 		when READY =>
 			busy <= '0';
 			Round <= "0000";
-			demux1 <= '0';
+			OUT_en <= '0';
 			key_en <= '0';
 		when others =>
 			busy <= '0';

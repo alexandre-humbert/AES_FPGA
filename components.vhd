@@ -1,11 +1,12 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
+-- Flip Flop avec reset
 entity FF is 
    port(
       Q : out std_logic_vector(127 downto 0);    
       clk :in std_logic;
-      reset : in std_logic; 
+      reset : in std_logic;
       D :in  std_logic_vector(127 downto 0)    
    );
 end FF;
@@ -27,6 +28,37 @@ end arch;
 library IEEE;
 use IEEE.std_logic_1164.all;
 
+-- Flip Flop avec reset et enable
+entity FF2 is 
+   port(
+      Q : out std_logic_vector(127 downto 0);    
+      clk :in std_logic;
+      reset : in std_logic;
+      enable : in std_logic;
+      D :in  std_logic_vector(127 downto 0)    
+   );
+end FF2;
+
+architecture arch of FF2 is  
+begin  
+ process(clk)
+ begin 
+    if(rising_edge(clk)) then
+     if(reset = '1') then 
+    Q <= (others => '0');
+   else 
+     if enable = '1' then
+       Q <= D; 
+     end if;
+   end if; 
+    end if;       
+ end process;  
+end arch; 
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+-- multiplexeur 2 entrees 1 sortie
 entity mux_2to1 is
     Port ( SEL : in  std_logic;
            A   : in  std_logic_vector(127 downto 0);
@@ -42,6 +74,7 @@ end arch;
 library IEEE;
 use IEEE.std_logic_1164.all;
 
+-- multiplexeur 3 entrees 1 sorties
 entity mux_3to1 is
     Port ( SEL : in  std_logic_vector(1 downto 0);
            A   : in  std_logic_vector(127 downto 0);
@@ -68,6 +101,7 @@ end arch;
 library IEEE;
 use IEEE.std_logic_1164.all;
 
+-- demultiplexeur 1 entree 2 sorties
 entity demux_1to2 is
  port(
  

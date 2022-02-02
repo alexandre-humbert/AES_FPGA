@@ -4,6 +4,7 @@ use IEEE.std_logic_1164.all;
 
 package const_tb is
 
+-- example 1 (input and round 1)
 constant INPUT : std_logic_vector(127 downto 0) := x"3243f6a8885a308d313198a2e0370734";
 constant CKEY : std_logic_vector(127 downto 0) := x"2b7e151628aed2a6abf7158809cf4f3c";
 
