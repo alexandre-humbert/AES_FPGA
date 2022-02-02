@@ -1,0 +1,5 @@
+altera_mf/
+work/
+*.bak
+transcript
+vsim.wlf
