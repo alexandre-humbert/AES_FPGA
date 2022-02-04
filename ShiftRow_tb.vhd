@@ -6,17 +6,24 @@ entity ShiftRow_tb is
 end ShiftRow_tb;
 
 architecture arch of ShiftRow_tb is
-component ShiftRow
-port (  IN_ShiftRow : in std_logic_vector(127 downto 0);
-		OUT_ShiftRow : out std_logic_vector(127 downto 0));
-end component;
 
-
-signal IN_ShiftRow : std_logic_vector(127 downto 0) := SubBytes1;
+signal IN_ShiftRow : std_logic_vector(127 downto 0) := round11;
 signal OUT_ShiftRow : std_logic_vector(127 downto 0);
 begin
 
-ShiftRow_comp : ShiftRow port map(IN_ShiftRow => IN_ShiftRow, OUT_ShiftRow => OUT_ShiftRow);
+ShiftRow_comp : entity work.ShiftRow(arch) port map
+	(IN_ShiftRow => IN_ShiftRow, OUT_ShiftRow => OUT_ShiftRow);
 
+Test : process
+begin
+wait for 10 ns;
+
+if OUT_ShiftRow = round12 then
+    report "Test PASS";
+else
+    report "Test FAIL";
+end if;
+wait;
+end process;
 
 end arch;

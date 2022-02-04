@@ -6,18 +6,25 @@ entity InvShiftRow_tb is
 end InvShiftRow_tb;
 
 architecture arch of InvShiftRow_tb is
-component InvShiftRow
-port (  IN_InvShiftRow : in std_logic_vector(127 downto 0);
-		OUT_invShiftRow : out std_logic_vector(127 downto 0));
-end component;
 
 
 signal IN_InvShiftRow : std_logic_vector(127 downto 0) := round12;
 signal OUT_InvShiftRow : std_logic_vector(127 downto 0);
-signal Expected : std_logic_vector(127 downto 0) := round11;
+
 begin
 
-InvShiftRow_comp : InvShiftRow port map(IN_InvShiftRow => IN_InvShiftRow, OUT_InvShiftRow => OUT_InvShiftRow);
+InvShiftRow_comp : entity work.InvShiftRow(arch) port map
+	(IN_InvShiftRow => IN_InvShiftRow, OUT_InvShiftRow => OUT_InvShiftRow);
 
+Test : process
+begin
+wait for 10 ns;
 
+if OUT_InvShiftRow = round11 then
+    report "Test PASS";
+else
+    report "Test FAIL";
+end if;
+wait;
+end process;
 end arch;

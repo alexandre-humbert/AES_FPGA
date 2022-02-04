@@ -7,79 +7,54 @@ end Double_SubByte_tb;
 
 architecture arch of Double_SubByte_tb is
 
-component Double_SubByte
-	PORT
-	(
-		address_a		: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
-		address_b		: IN STD_LOGIC_VECTOR (7 DOWNTO 0);
-		clk		: IN STD_LOGIC ;
-		SBox_invSbox : IN STD_LOGIC ;
-		q_a		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
-		q_b		: OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
-	);
-end component;
+signal IN_SubBytes : std_logic_vector(127 downto 0) := round10;
+signal OUT_SubBytes : std_logic_vector(127 downto 0);
 
-signal ADD_A : std_logic_vector(7 downto 0);
-signal ADD_B : std_logic_vector(7 downto 0);
 signal SBoxinv : std_logic := '0';
 signal clk : std_logic := '0';
-signal OUT_A : std_logic_vector(7 downto 0);
-signal OUT_B : std_logic_vector(7 downto 0);
 
-constant clk_period : time := 10 ns;
+constant period : time := 10 ns;
 
 
 
 begin
 
-Double_SubByte_comp : Double_SubByte port map(address_a => ADD_A, address_b => ADD_B, clk => clk, SBox_invSbox => SBoxinv, q_a => OUT_A, q_b => OUT_B);
-
-p0 : process 
-  begin
-ADD_A <= x"02";
-ADD_B <= x"12";
-wait for clk_period/2;
-clk <= '1';
-wait for clk_period/2;
-clk <= '0';
-
-ADD_A <= x"25";
-ADD_B <= x"4A";
-wait for clk_period/2;
-clk <= '1';
-wait for clk_period/2;
-clk <= '0';
-
-ADD_A <= x"8B";
-ADD_B <= x"43";
-wait for clk_period/2;
-clk <= '1';
-wait for clk_period/2;
-clk <= '0';
-
-SBoxinv <= '1';
-
-ADD_A <= x"02";
-ADD_B <= x"12";
-wait for clk_period/2;
-clk <= '1';
-wait for clk_period/2;
-clk <= '0';
-
-ADD_A <= x"25";
-ADD_B <= x"4A";
-wait for clk_period/2;
-clk <= '1';
-wait for clk_period/2;
-clk <= '0';
-
-ADD_A <= x"8B";
-ADD_B <= x"43";
-wait for clk_period/2;
-clk <= '1';
-wait for clk_period/2;
-clk <= '0';
+clk <= not clk after period/2;
 
 
-end process p0;
+Gen_SubByte: 
+  for I in 0 to 7 generate
+    SubByteX : entity  work.Double_SubByte(SYN) port map
+    (	address_a => IN_SubBytes(16*I + 7 downto 16*I),
+	address_b => IN_SubBytes(16*I + 15 downto 16*I+8),
+	clk => clk,
+	SBox_invSbox => SBoxinv,
+	q_a => OUT_SubBytes(16*I + 7 downto 16*I),
+	q_b => OUT_SubBytes(16*I + 15 downto 16*I+8));
+  end generate Gen_SubByte;
+
+IN_SubBytes <= round11 after 20 ns;
+SBoxinv <= '1' after 20 ns;
+
+
+Test : process
+begin
+wait for 10 ns;
+
+if OUT_SubBytes = round11 then
+    report "Test PASS";
+else
+    report "Test FAIL";
+end if;
+
+wait for 20 ns;
+
+if OUT_SubBytes = round10 then
+    report "Test Inv PASS";
+else
+    report "Test Inv FAIL";
+end if;
+wait;
+end process;
+
 end arch;

@@ -16,14 +16,22 @@ signal kout : std_logic_vector(127 downto 0) ;
 begin
 
 clk <= not clk after period/2;
-enable <= '1' after 10 ns;
+enable <= '1' after 10 ns, '0' after 110 ns;
 
-Exp_Key_comp : entity work.Exp_Key(arch) port map( 
-   kin => kin,
-		clk => clk,
-		enable => enable,
-		kout => kout
-		);
+Exp_Key_comp : entity work.Exp_Key(arch) port map
+	( kin => kin, clk => clk, enable => enable, kout => kout);
 
+
+Test : process
+begin
+wait for 110 ns;
+
+if kout = round104 then
+    report "Test PASS";
+else
+    report "Test FAIL";
+end if;
+wait;
+end process;
 
 end arch;

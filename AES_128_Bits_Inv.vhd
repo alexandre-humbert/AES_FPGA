@@ -44,31 +44,31 @@ begin
 AddRoundKey : entity  work.AddRoundKey(arch) port map
   (
     KeyRound => KRead,
-		IN_AddRoundKey =>IN_AddRoundKey,
-		OUT_AddRoundKey => OUT_AddRoundKey
+    IN_AddRoundKey =>IN_AddRoundKey,
+    OUT_AddRoundKey => OUT_AddRoundKey
   );
 
 
 Gen_InvSubByte: 
   for I in 0 to 7 generate
     SubByteX : entity  work.Double_SubByte(SYN) port map
-    (address_a		=> IN_SubBytes(16*I + 7 downto 16*I),
-		address_b => IN_SubBytes(16*I + 15 downto 16*I+8),
-		clk		=> clk,
-		SBox_invSbox => '1' ,
-		q_a	=> OUT_SubBytes(16*I + 7 downto 16*I),
-		q_b		=> OUT_SubBytes(16*I + 15 downto 16*I+8));
+    (address_a	=> IN_SubBytes(16*I + 7 downto 16*I),
+     address_b => IN_SubBytes(16*I + 15 downto 16*I+8),
+     clk => clk,
+     SBox_invSbox => '1' ,
+     q_a => OUT_SubBytes(16*I + 7 downto 16*I),
+    q_b	 => OUT_SubBytes(16*I + 15 downto 16*I+8));
   end generate Gen_InvSubByte;
   
 InvShiftRow : entity  work.InvShiftRow(arch)port map
 (  IN_InvShiftRow => IN_ShiftRow, 
-	OUT_InvShiftRow => OUT_ShiftRow);
+   OUT_InvShiftRow => OUT_ShiftRow);
 
 Gen_InvMixCols: 
   for I in 0 to 3 generate
     InvMixColX : entity  work.InvMixColumns(arch) port map
-    (IN_InvMixColumns		=> IN_MixColumns(32*I + 31 downto 32*I),
-		 OUT_InvMixColumns		=> OUT_MixColumns(32*I + 31 downto 32*I));
+    (IN_InvMixColumns	=> IN_MixColumns(32*I + 31 downto 32*I),
+     OUT_InvMixColumns => OUT_MixColumns(32*I + 31 downto 32*I));
   end generate Gen_InvMixCols;
   
   

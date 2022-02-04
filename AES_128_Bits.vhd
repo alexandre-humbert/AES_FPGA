@@ -35,43 +35,32 @@ begin
 
 
 AddRoundKey : entity  work.AddRoundKey(arch) port map
-  (
-    KeyRound => Key,
-		IN_AddRoundKey =>IN_AddRoundKey,
-		OUT_AddRoundKey => OUT_AddRoundKey
-  );
+  ( KeyRound => Key, IN_AddRoundKey =>IN_AddRoundKey, OUT_AddRoundKey => OUT_AddRoundKey );
 
 
 Gen_SubByte: 
   for I in 0 to 7 generate
     SubByteX : entity  work.Double_SubByte(SYN) port map
-    (address_a		=> IN_SubBytes(16*I + 7 downto 16*I),
-		address_b => IN_SubBytes(16*I + 15 downto 16*I+8),
-		clk		=> clk,
-		SBox_invSbox => '0' ,
-		q_a	=> OUT_SubBytes(16*I + 7 downto 16*I),
-		q_b		=> OUT_SubBytes(16*I + 15 downto 16*I+8));
+    (address_a	=> IN_SubBytes(16*I + 7 downto 16*I),
+     address_b => IN_SubBytes(16*I + 15 downto 16*I+8),
+     clk => clk,
+    SBox_invSbox => '0' ,
+    q_a => OUT_SubBytes(16*I + 7 downto 16*I),
+    q_b => OUT_SubBytes(16*I + 15 downto 16*I+8));
   end generate Gen_SubByte;
   
 ShiftRow : entity  work.ShiftRow(arch)port map
-(  IN_ShiftRow => IN_ShiftRow, 
-	OUT_ShiftRow => OUT_ShiftRow);
+(  IN_ShiftRow => IN_ShiftRow, OUT_ShiftRow => OUT_ShiftRow);
 
 Gen_MixCols: 
   for I in 0 to 3 generate
     MixColX : entity  work.MixColumns(arch) port map
-    (IN_MixColumns		=> IN_MixColumns(32*I + 31 downto 32*I),
-		 OUT_MixColumns		=> OUT_MixColumns(32*I + 31 downto 32*I));
+    (IN_MixColumns => IN_MixColumns(32*I + 31 downto 32*I),
+     OUT_MixColumns => OUT_MixColumns(32*I + 31 downto 32*I));
   end generate Gen_MixCols;
   
 Mux3to1 : entity  work.mux_3to1(arch) port map
 	(SEL => SelMux1, A=> DIN, B=> OUT_ShiftRow, C=> OUT_MixColumns, X=> IN_AddRoundKey);
-
-
-IN_SubBytes <= OUT_AddRoundKey;
-
-
-IN_MixColumns <= OUT_ShiftRow;
 
 SM : entity work.AES_State_Machine(arch) port map
 	(clk => clk, reset => rst, start => start, mux1 => SelMux1, OUT_en => OUT_en, busy => busy, key_en => open);
@@ -82,5 +71,7 @@ FF_DOUT : entity work.FF2(arch) port map
 FF_KEY : entity work.FF(arch) port map
 	(clk => clk, reset => rst, D => KIN, Q => Key);
 	
+IN_SubBytes <= OUT_AddRoundKey;
+IN_MixColumns <= OUT_ShiftRow;
 IN_ShiftRow <= OUT_SubBytes;
 end arch;

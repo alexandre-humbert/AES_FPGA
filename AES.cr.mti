@@ -18,15 +18,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb 
 -- Compiling architecture arch of AES_128_Bits_Full_tb
 -- Loading entity AES_128_Bits_Full
 
-} {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/ShiftRow_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/ShiftRow_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package const_tb
--- Compiling entity ShiftRow_tb
--- Compiling architecture arch of ShiftRow_tb
-
 } {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/MixColumns_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/MixColumns_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
 -- Loading package STANDARD
@@ -35,6 +26,7 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb 
 -- Loading package const_tb
 -- Compiling entity MixColumns_tb
 -- Compiling architecture arch of MixColumns_tb
+-- Loading entity MixColumns
 
 } {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/InvMixColumns.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/InvMixColumns.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
@@ -43,6 +35,16 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb 
 -- Loading package std_logic_1164
 -- Compiling entity InvMixColumns
 -- Compiling architecture arch of InvMixColumns
+
+} {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/Double_SubByte_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/Double_SubByte_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package const_tb
+-- Compiling entity Double_SubByte_tb
+-- Compiling architecture arch of Double_SubByte_tb
+-- Loading entity Double_SubByte
 
 } {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/Exp_Key.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/Exp_Key.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
@@ -55,15 +57,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb 
 -- Compiling architecture arch of Exp_Key
 -- Loading entity Double_SubByte
 -- Loading entity RCON_Gen
-
-} {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/Double_SubByte_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/Double_SubByte_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package const_tb
--- Compiling entity Double_SubByte_tb
--- Compiling architecture arch of Double_SubByte_tb
 
 } {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/AES_128_Bits_Inv_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/AES_128_Bits_Inv_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
@@ -107,6 +100,7 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb 
 -- Loading package const_tb
 -- Compiling entity InvShiftRow_tb
 -- Compiling architecture arch of InvShiftRow_tb
+-- Loading entity InvShiftRow
 
 } {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/InvMixColumns_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/InvMixColumns_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
@@ -116,6 +110,14 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb 
 -- Loading package const_tb
 -- Compiling entity InvMixColumns_tb
 -- Compiling architecture arch of InvMixColumns_tb
+-- Loading entity InvMixColumns
+
+} {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/Constantes_test.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/Constantes_test.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling package const_tb
 
 } {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/AddRoundKey.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/AddRoundKey.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
@@ -193,23 +195,7 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb 
 -- Loading package const_tb
 -- Compiling entity AddRoundKey_tb
 -- Compiling architecture arch of AddRoundKey_tb
-
-} {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/Double_SubByte.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/Double_SubByte.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity Double_SubByte
--- Compiling architecture SYN of double_subbyte
-
-} {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/KeyMem.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/KeyMem.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity KeyMem
--- Compiling architecture arch of KeyMem
+-- Loading entity AddRoundKey
 
 } {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/AES_128_Bits_Inv.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/AES_128_Bits_Inv.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
@@ -229,6 +215,23 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb 
 -- Loading entity FF
 -- Loading entity KeyMem
 -- Loading entity Exp_Key
+
+} {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/Double_SubByte.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/Double_SubByte.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity Double_SubByte
+-- Compiling architecture SYN of double_subbyte
+
+} {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/KeyMem.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/KeyMem.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity KeyMem
+-- Compiling architecture arch of KeyMem
 
 } {} {}} C:/Users/alexh/Desktop/GitHub/AES_FPGA/AES_State_Machine_Inv.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/alexh/Desktop/GitHub/AES_FPGA/AES_State_Machine_Inv.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2021.1 Compiler 2021.02 Feb  3 2021

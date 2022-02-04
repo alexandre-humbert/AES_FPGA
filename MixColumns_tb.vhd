@@ -7,18 +7,28 @@ end MixColumns_tb;
 
 architecture arch of MixColumns_tb is
 
-component MixColumns is
-port (  IN_MixColumns: in std_logic_vector(31 downto 0);
-	OUT_MixColumns : out std_logic_vector(31 downto 0));
-end component MixColumns;
-
-
-signal IN_MixColumns : std_logic_vector(31 downto 0) := round13(127 downto 96);
-signal OUT_MixColumns : std_logic_vector(31 downto 0);
+signal IN_MixColumns : std_logic_vector(127 downto 0) := round12;
+signal OUT_MixColumns : std_logic_vector(127 downto 0);
 
 begin
 
-MixColumns_comp : MixColumns port map(IN_MixColumns => IN_MixColumns, OUT_MixColumns => OUT_MixColumns);
+Gen_MixCols: 
+  for I in 0 to 3 generate
+    MixColX : entity  work.MixColumns(arch) port map
+    (IN_MixColumns => IN_MixColumns(32*I + 31 downto 32*I),
+     OUT_MixColumns => OUT_MixColumns(32*I + 31 downto 32*I));
+  end generate Gen_MixCols;
 
+Test : process
+begin
+wait for 10 ns;
+
+if OUT_MixColumns = round13 then
+    report "Test PASS";
+else
+    report "Test FAIL";
+end if;
+wait;
+end process;
 
 end arch;

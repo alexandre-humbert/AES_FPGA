@@ -7,18 +7,29 @@ end InvMixColumns_tb;
 
 architecture arch of InvMixColumns_tb is
 
-component InvMixColumns is
-port (  IN_InvMixColumns: in std_logic_vector(31 downto 0);
-	OUT_InvMixColumns : out std_logic_vector(31 downto 0));
-end component InvMixColumns;
-
-
-signal IN_InvMixColumns : std_logic_vector(31 downto 0) := round13(127 downto 96);
-signal OUT_InvMixColumns : std_logic_vector(31 downto 0);
+signal IN_InvMixColumns : std_logic_vector(127 downto 0) := round13;
+signal OUT_InvMixColumns : std_logic_vector(127 downto 0);
 
 begin
 
-InvMixColumns_comp : InvMixColumns port map(IN_InvMixColumns => IN_InvMixColumns, OUT_InvMixColumns => OUT_InvMixColumns);
+Gen_InvMixCols: 
+  for I in 0 to 3 generate
+    InvMixColX : entity  work.InvMixColumns(arch) port map
+    (IN_InvMixColumns	=> IN_InvMixColumns(32*I + 31 downto 32*I),
+     OUT_InvMixColumns => OUT_InvMixColumns(32*I + 31 downto 32*I));
+  end generate Gen_InvMixCols;
 
+
+Test : process
+begin
+wait for 10 ns;
+
+if OUT_InvMixColumns = round12 then
+    report "Test PASS";
+else
+    report "Test FAIL";
+end if;
+wait;
+end process;
 
 end arch;
