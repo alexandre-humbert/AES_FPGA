@@ -13,6 +13,8 @@ constant SubBytes1 :   std_logic_vector(127 downto 0) := x"d42711aee0bf98f1b8b45
 constant ShiftRows1 :  std_logic_vector(127 downto 0) := x"d4bf5d30e0b452aeb84111f11e2798e5";
 constant MixColumns1 : std_logic_vector(127 downto 0) := x"046681e5e0cb199a48f8d37a2806264c";
 
+constant RESU : std_logic_vector(127 downto 0) := x"3925841D02DC09FBDC118597196A0B32";
+
 -- example vectors
 
 constant round00 : std_logic_vector(127 downto 0) := x"00112233445566778899aabbccddeeff"; -- input

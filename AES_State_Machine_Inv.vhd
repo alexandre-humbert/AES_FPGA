@@ -11,10 +11,10 @@ port (  clk : in std_logic;
         
         mux1 : out std_logic;
         mux2 : out std_logic;
-        demux1 : out std_logic; 
-	      key_en : out std_logic;
-	      KeyRW : out std_logic;
-	      KeyAddr : out std_logic_vector(3 downto 0);
+        OUT_en : out std_logic; 
+	key_en : out std_logic;
+	KeyRW : out std_logic;
+	KeyAddr : out std_logic_vector(3 downto 0);
         busy : out std_logic
 );
   
@@ -38,12 +38,12 @@ if reset = '1' then
 	State <= READY;
 	Round <= "0000";
 	busy <= '0';
-  key_en <= '0';
-  KeyRW <= '0';
+        key_en <= '0';
+        KeyRW <= '0';
  	mux1 <= '0';
 	mux2 <= '0';
-	demux1 <= '0';
-  ADDR <= "1111";
+	OUT_en <= '0';
+        ADDR <= "1111";
 elsif start ='1' then
 	State <= KEYGEN;
 else
@@ -68,7 +68,7 @@ else
 			busy <= '1';
 			mux1 <= '0';
 			mux2 <= '0';
-			demux1 <= '0';
+			OUT_en <= '0';
 			State <= RUNNING;
 			key_en <= '1';
 			KeyRW <= '1';
@@ -79,7 +79,7 @@ else
 			busy <= '1';
 			mux1 <= '1';
 			mux2 <= '1';
-			demux1 <= '0';
+			OUT_en <= '0';
 			Round <= std_logic_vector( unsigned(Round) + 1);
 			ADDR <= std_logic_vector( unsigned(ADDR) - 1);
 			if Round = "1000" then
@@ -90,15 +90,19 @@ else
 			busy <= '1';
 			mux1 <= '1';
 			mux2 <= '1';
-			demux1 <= '1';
+			OUT_en <= '1';
 			State <= READY;
 			
 			
 		when READY =>
-			busy <= '0';
 			Round <= "0000";
-			demux1 <= '0';
-			key_en <= '0';
+			busy <= '0';
+        		key_en <= '0';
+        		KeyRW <= '0';
+ 			mux1 <= '0';
+			mux2 <= '0';
+			OUT_en <= '0';
+			ADDR <= "1111";
 		  
 		when others =>
 			busy <= '0';

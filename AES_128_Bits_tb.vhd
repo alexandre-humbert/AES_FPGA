@@ -38,4 +38,15 @@ KIN <= round04 after 100 ns, round14 after 110 ns, round24 after 120 ns,round34 
 reset <= '0' after 50 ns;
 start <= '1' after 90 ns, '0' after 100 ns;
 
+Test : process
+begin
+wait for 250 ns;
+
+if DOUT = output then
+    report "Test PASS";
+else
+    report "Test FAIL";
+end if;
+wait;
+end process;
 end arch;

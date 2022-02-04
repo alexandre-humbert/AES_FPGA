@@ -33,9 +33,30 @@ AES_128_Bits_Inv_comp : entity work.AES_128_Bits_Inv port map(
 clk <= not clk after period/2;
 
 
-DIN <= output after 60 ns;
-KIN <= round04 after 60 ns;
+DIN <= output after 60 ns, RESU after 350 ns;
+KIN <= round04 after 60 ns, CKEY after 350 ns;
 reset <= '0' after 30 ns;
-start <= '1' after 60 ns, '0' after 70 ns;
+start <= '1' after 60 ns, '0' after 70 ns, '1' after 350 ns, '0' after 360 ns;
 
+
+Test : process
+begin
+wait for 320 ns;
+
+if DOUT = round00 then
+    report "Test 1 PASS";
+else
+    report "Test 1 FAIL";
+end if;
+
+wait for 320 ns;
+
+if DOUT = INPUT then
+    report "Test 2 PASS";
+else
+    report "Test 2 FAIL";
+end if;
+
+wait;
+end process;
 end arch;

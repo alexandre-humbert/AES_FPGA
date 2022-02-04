@@ -39,4 +39,24 @@ KIN <= round04 after 60 ns, CKEY after 260 ns;
 reset <= '0' after 30 ns;
 start <= '1' after 70 ns, '0' after 80 ns, '1' after 260 ns, '0' after 270 ns;
 
+Test : process
+begin
+wait for 250 ns;
+
+if DOUT = output then
+    report "Test 1 PASS";
+else
+    report "Test 1 FAIL";
+end if;
+
+wait for 200 ns;
+
+if DOUT = RESU then
+    report "Test 2 PASS";
+else
+    report "Test 2 FAIL";
+end if;
+wait;
+end process;
+
 end arch;
