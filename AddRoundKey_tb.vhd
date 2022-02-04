@@ -24,13 +24,12 @@ AddRoundkey_comp : AddRoundKey port map(KeyRound => K_IN, IN_AddRoundKey => D_IN
 process
 begin
 wait for 10 ns;
--- report "Result : "& to_string(OUTPUT);
--- report "Expected :"& to_string(StartRound1);
+
 
 if OUTPUT = StartRound1 then
-report "Test PASS";
+    report "Test PASS";
 else
-report "Test FAIL";
+    report "Test FAIL";
 end if;
 wait;
 end process;
