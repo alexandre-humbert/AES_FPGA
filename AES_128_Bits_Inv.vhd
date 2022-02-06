@@ -16,6 +16,9 @@ end AES_128_Bits_Inv;
 
 
 architecture arch of AES_128_Bits_Inv is
+
+signal INPUT : std_logic_vector(127 downto 0);
+
 signal IN_SubBytes : std_logic_vector(127 downto 0);
 signal OUT_SubBytes : std_logic_vector(127 downto 0);
 signal IN_AddRoundKey : std_logic_vector(127 downto 0);
@@ -47,7 +50,6 @@ AddRoundKey : entity  work.AddRoundKey(arch) port map
     OUT_AddRoundKey => OUT_AddRoundKey
   );
 
-
 Gen_InvSubByte: 
   for I in 0 to 7 generate
     SubByteX : entity  work.Double_SubByte(SYN) port map
@@ -58,6 +60,7 @@ Gen_InvSubByte:
      q_a => OUT_SubBytes(16*I + 7 downto 16*I),
     q_b	 => OUT_SubBytes(16*I + 15 downto 16*I+8));
   end generate Gen_InvSubByte;
+
   
 InvShiftRow : entity  work.InvShiftRow(arch)port map
 (  IN_InvShiftRow => IN_ShiftRow, 
@@ -72,7 +75,7 @@ Gen_InvMixCols:
   
   
 Mux2to1 : entity  work.mux_2to1(arch) port map
-	(SEL => SelMux1, A=> DIN, B=> OUT_SubBytes, X=> IN_AddRoundKey);
+	(SEL => SelMux1, A=> INPUT, B=> OUT_SubBytes, X=> IN_AddRoundKey);
 
 Mux2to12 : entity  work.mux_2to1(arch) port map
 	(SEL => SelMux2, A=> IN_MixColumns, B=> OUT_MixColumns, X=> IN_ShiftRow);
@@ -87,7 +90,8 @@ FF_DOUT : entity work.FF2(arch) port map
 FF_KEY : entity work.FF(arch) port map
 	(clk => clk, reset => rst, D => KIN, Q => Key);
 	
-
+FF_DIN : entity work.FF(arch) port map
+	(clk => clk, reset => rst, D => DIN, Q => INPUT);
 
 MEM : entity work.KeyMem(arch) port map
   (clk => clk, rst => rst, KeyW => Kout , KeyR => KRead, ADDR => KeyAddr, RW => KeyRW);

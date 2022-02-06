@@ -1,5 +1,15 @@
 altera_mf/
 work/
+output_files/
+db/
+incremental_db/
 *.bak
 transcript
 vsim.wlf
+*.mpf
+*.mpf_new
+*.txt
+*.qpf
+*.qsf
+*.qws
+*.wlf

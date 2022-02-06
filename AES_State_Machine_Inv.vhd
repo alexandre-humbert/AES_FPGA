@@ -21,16 +21,17 @@ port (  clk : in std_logic;
 end AES_State_Machine_Inv;
 
 architecture arch of AES_State_Machine_Inv is
-type t_State is (KEYGEN, READY, RUNNING, FROUND, LROUND, BOOT);
+type t_State is (KEYGEN, READY, RUNNING, FROUND, LROUND);
   
 signal State : t_State;
-signal Round : std_logic_vector(3 downto 0);
-signal ADDR : std_logic_vector(3 downto 0);
+signal Round : std_logic_vector(3 downto 0); -- numero du round
+signal ADDR : std_logic_vector(3 downto 0); -- Adresse mémoire où sont stockées les clés
 
 begin
  
 process (clk)
 begin
+
 KeyAddr <= ADDR;
 
 if rising_edge(clk) then
@@ -44,26 +45,24 @@ if reset = '1' then
 	mux2 <= '0';
 	OUT_en <= '0';
         ADDR <= "1111";
+
 elsif start ='1' then
 	State <= KEYGEN;
 else
 	case State is
-	  
+	  	-- Les clés sont calculées et enregistrées dans une mémoire.
 	  	when KEYGEN =>
 		  busy <= '1';
 		  key_en <= '1';
 		  KeyRW <= '0';
 			if ADDR = "1010" then
-				State <= BOOT;
+				State <= FROUND;
 				KeyRW <= '1';
 			else
 			  ADDR <= std_logic_vector( unsigned(ADDR) + 1);
 			end if;
-			
-		when BOOT =>
-		  State <= FROUND;
-			
-			
+
+		-- round 1 : on court-circuit MixColomns
 	  	when FROUND =>
 			busy <= '1';
 			mux1 <= '0';
@@ -74,7 +73,7 @@ else
 			KeyRW <= '1';
 			ADDR <= std_logic_vector( unsigned(ADDR) - 1);
 
-
+		-- round classique
 		when RUNNING =>
 			busy <= '1';
 			mux1 <= '1';
@@ -86,6 +85,7 @@ else
 				State <= LROUND;
 			end if;
 			
+		-- dernier round : on active la sortie
 		when LROUND =>
 			busy <= '1';
 			mux1 <= '1';

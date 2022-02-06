@@ -17,6 +17,8 @@ end AES_128_Bits_Full;
 
 architecture arch of AES_128_Bits_Full is
 
+signal INPUT : std_logic_vector(127 downto 0);
+
 signal IN_SubBytes : std_logic_vector(127 downto 0);
 signal OUT_SubBytes : std_logic_vector(127 downto 0);
 signal IN_AddRoundKey : std_logic_vector(127 downto 0);
@@ -62,7 +64,7 @@ Gen_MixCols:
   end generate Gen_MixCols;
   
 Mux3to1 : entity  work.mux_3to1(arch) port map
-	(SEL => SelMux1, A=> DIN, B=> OUT_ShiftRow, C=> OUT_MixColumns, X=> IN_AddRoundKey);
+	(SEL => SelMux1, A=> INPUT, B=> OUT_ShiftRow, C=> OUT_MixColumns, X=> IN_AddRoundKey);
 
 
 SM : entity work.AES_State_Machine(arch) port map
@@ -70,6 +72,9 @@ SM : entity work.AES_State_Machine(arch) port map
 
 FF_DOUT : entity work.FF2(arch) port map
 	(clk => clk, reset => rst, enable => OUT_en, D => OUT_AddRoundKey, Q => DOUT);
+
+FF_DIN : entity work.FF(arch) port map
+	(clk => clk, reset => rst, D => DIN, Q => INPUT);
 
 FF_KEY : entity work.FF(arch) port map
 	(clk => clk, reset => rst, D => KIN, Q => Key);
